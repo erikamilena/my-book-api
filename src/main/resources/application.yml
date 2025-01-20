@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: book-api
+  datasource:
+    url: jdbc:postgresql://localhost:5433/book
+    username: postgres
+    password: 12345678
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
