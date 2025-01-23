@@ -16,8 +16,10 @@ import static org.mockito.Mockito.*;
 
 /**
  * unit test structure: given, when and then
+ * @SpringBootTest -> This notation start all Spring
+ * @ExtendWith(MockitoExtension.class) -> Only start test
  */
-//@SpringBootTest
+
 @ExtendWith(MockitoExtension.class)
 class BookServiceTest {
 
@@ -29,35 +31,24 @@ class BookServiceTest {
 
     @Test
     void testGetAll() {
-        //given
         Book book1 = new Book(1, "Libro 1", "Predeterminado");
-        //Book book2 = Book.builder().id(1).title("Libro 2").author("Predeterminado").build();
-        //Book.BookBuilder builder = Book.builder().author("Predeterminado");
-        //Book x1 = builder.title("juan").build();
-        //Book x2 = builder.title("pedro").build();
 
         List<Book> books = List.of(book1);
         when(mockBookRepository.findAll()).thenReturn(books);
 
-        //When
         List<Book> actual = bookService.getAll();
 
-        //Then
         assertEquals(1, actual.size());
     }
 
     @Test
     void testGetById() {
-        //given
         Optional<Book> book = Optional.of(new Book(2, "Book 1", "Predeterminado 1"));
         when(mockBookRepository.findById(2L)).thenReturn(book);
 
-        //When
-       Book actual = bookService.getById(2L);
+        Book actual = bookService.getById(2L);
 
-        //Then
         assertNotNull(actual);
-
         assertEquals("Book 1", actual.getTitle());
     }
 
@@ -115,7 +106,6 @@ class BookServiceTest {
         bookService.deleteBook(1L);
 
         verify(mockBookRepository, times(1)).deleteById(1L);
-
     }
 
     @Test
