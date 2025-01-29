@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Service is where all the business logic
@@ -36,12 +37,35 @@ public class BookService {
         return null;
     }
 
+    public Book updateBookPath(Long id, Book bookPath) {
+        Optional<Book> bookOptional = bookRepository.findById(id);
+
+        if (bookOptional.isPresent()) {
+            Book book = bookOptional.get();
+
+            if (bookPath.getTitle() != null) {
+                book.setTitle(bookPath.getTitle());
+            }
+
+            if (bookPath.getAuthor() != null) {
+                book.setAuthor(bookPath.getAuthor());
+            }
+
+            return bookRepository.save(book);
+        }
+        return null;
+    }
+
     public void deleteBook(Long id) {
         if (bookRepository.existsById(id)) {
             bookRepository.deleteById(id);
         } else {
             throw new RuntimeException("Book not found");
         }
+    }
+
+    public List<Book> findByTitle(String title) {
+        return bookRepository.findByTitleContaining(title);
     }
 
 }
