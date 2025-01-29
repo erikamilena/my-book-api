@@ -60,4 +60,9 @@ public class BookController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/find")
+    public List<Book> findBooksByTitle(@RequestParam String title) {
+        return bookService.findByTitle(title);
+    }
+
 }
